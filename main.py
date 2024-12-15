@@ -2,6 +2,8 @@ from domains_checker import (
     is_valid_domain,
     check_domains_in_file,
     find_domains_in_text,
+    find_domains_in_url,
+    check_domains_in_url,
 )
 from domains_checker_TEST import *
 
@@ -9,9 +11,11 @@ from domains_checker_TEST import *
 def user_menu():
     print("Выберите действие:")
     print("1. Проверить доменное имя")
-    print("2. Проверить домены в файле")
-    print("3. Найти домены в тексте")
-    print("4. Выйти")
+    print("2. Найти домены в тексте")
+    print("3. Проверить домены на корректность в файле")
+    print("4. Найти домены на странице по URL")
+    print("5. Проверить домены на корректность на странице по URL")
+    print("0. Выйти")
 
     while True:
         choice = input("Введите номер действия: ")
@@ -24,18 +28,26 @@ def user_menu():
         elif choice == "2":
             filename = input("Введите имя файла: ")
             try:
-                valid_domains = check_domains_in_file(filename)
-                print("Корректные домены:", valid_domains)
+                domains = find_domains_in_text(filename)
+                print("Найденные омены:", domains)
             except FileNotFoundError:
                 print("Файл не найден.")
         elif choice == "3":
             filename = input("Введите имя файла: ")
             try:
-                valid_domains = find_domains_in_text(filename)
+                valid_domains = check_domains_in_file(filename)
                 print("Корректные домены:", valid_domains)
             except FileNotFoundError:
                 print("Файл не найден.")
         elif choice == "4":
+            url = input("Введите URL: ")
+            domains = find_domains_in_url(url)
+            print("Найденные домены:", domains)
+        elif choice == "5":
+            url = input("Введите URL: ")
+            domains = check_domains_in_url(url)
+            print("Корректные домены:", domains)
+        elif choice == "0":
             print("Выход...")
             break
         else:
